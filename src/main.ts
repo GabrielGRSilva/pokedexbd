@@ -1,41 +1,35 @@
-// repl.js actually refers to repl.ts
-import { startREPL, cleanInput } from "./repl.js";
-
+// .js actually refers to .ts
+import { startREPL } from "./repl.js";
+import { commandExit, commandHelp } from "./commands.js";
 import { createInterface } from 'node:readline';
 import { stdin, stdout } from 'node:process';
+import type { CLICommand } from "./clicommand.js";
 
-function callback(input: string) {
-  if (input.length === 0) {
-    rl.prompt();
-    return;
-  } else {
-  const cleanedInput = cleanInput(input); 
-  console.log(`Your command was: <${cleanedInput}>`);
-  rl.prompt();
-  return;
-  }
-}
+export function getCommands(): Record<string, CLICommand> { //This type will describe which commands are available to the user
+  return {
+    exit: {
+      name: "exit",
+      description: "Exits the pokedex",
+      callback: commandExit,
+    },
+    help: {
+      name: "help",
+      description: "Explains the available commands",
+      callback: commandHelp,
+    },
+  };
+};
 
-const rl = createInterface({ //Standard interface which waits user input and answers
+export const rl = createInterface({ //Standard interface which waits user input and answers
   input: stdin,
   output: stdout,
   prompt: "Pokedex >",
 });
 
 function main() {
-  startREPL();
-  rl.prompt();
-  rl.on("line", (input) => {
-    if (input.length === 0) {
-    rl.prompt();
-    return;
-  } else {
-  const cleanedInput = cleanInput(input); 
-  console.log(`Your command was: ${cleanedInput[0]}`);
-  rl.prompt();
-  return;
-  }});
-  }
+  startREPL(); //Contains input processing logic
+};
+  
 
 
 main();
