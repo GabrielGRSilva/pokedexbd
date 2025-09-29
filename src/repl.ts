@@ -1,7 +1,7 @@
-import { State, CLICommand } from "./state.js"
-import { commandExit, commandHelp } from "./commands.js"
+import {State} from "./state.js"
+import {commandExit, commandHelp, commandMap, commandMapBack } from "./commands.js"
 
-export function getCommands(): Record<string, CLICommand> { //This type will describe which commands are available to the user
+export async function getCommands(): Promise<any> { //This type will describe which commands are available to the user
   return {
     exit: {
       name: "exit",
@@ -13,7 +13,16 @@ export function getCommands(): Record<string, CLICommand> { //This type will des
       description: "Explains the available commands",
       callback: commandHelp,
     },
-
+    map: {
+      name: "map",
+      description: "Shows areas of the Pokémon world",
+      callback: commandMap,
+    },
+    mapb: {
+      name: "mapb",
+      description: "Shows previous seen areas of the Pokémon world",
+      callback: commandMapBack,
+    },
   };
 };
 
@@ -44,10 +53,13 @@ function processUserInput(input: string, state: State) {
 
 export function startREPL(state: State) {
   state.rl.prompt();
-  state.rl.on("line", (line) => {
+  try {
+    state.rl.on("line", (line) => {
     processUserInput(line, state);
     state.rl.prompt();
-  }); 
+  });}catch(error) {
+    console.log(error);
+  }
 };
 
 export function cleanInput(input: string): string[] {
