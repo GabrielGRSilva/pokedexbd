@@ -1,5 +1,4 @@
 import {LocationIDless} from "./apitypes/locationidless.js";
-import {Location} from "./apitypes/location.js";
 
 export class PokeAPI {
   private static readonly baseURL = "https://pokeapi.co/api/v2";
@@ -17,7 +16,7 @@ export class PokeAPI {
     });
     const data = await response.json();
 
-    let obj: LocationIDless = JSON.parse(data);
+    let obj: LocationIDless = JSON.parse(JSON.stringify(data));
 
    return obj;
     }catch(error){
@@ -32,7 +31,7 @@ export class PokeAPI {
         method: "GET",
         mode: "cors",    
     });
-        // ADD ERROR GUARD
+    
     const data = await response.json();
 
     let obj: LocationIDless = JSON.parse(data);

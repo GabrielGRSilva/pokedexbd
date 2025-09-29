@@ -1,7 +1,7 @@
 import {State} from "./state.js"
 import {commandExit, commandHelp, commandMap, commandMapBack } from "./commands.js"
 
-export async function getCommands(): Promise<any> { //This type will describe which commands are available to the user
+export function getCommands() { //This type will describe which commands are available to the user
   return {
     exit: {
       name: "exit",
@@ -34,6 +34,7 @@ function processUserInput(input: string, state: State) {
 
     const foundCommand = cleanInput(input)[0]; //First word of input
     const cmd = state.commands;
+    
     for (let keyName of cmd) {
       if (foundCommand == keyName.name) {
       try{

@@ -1,12 +1,12 @@
 import {State} from "./state.js"
 
-export function commandExit(state: State): void {
+export async function commandExit(state: State) {
     console.log("Closing the Pokedex... Goodbye!");
     state.rl.close();
     process.exit(0);
 };
 
-export function commandHelp(state: State): void {
+export async function commandHelp(state: State) {
 
     console.log("Welcome to the Pokedex!\nUsage:\n")
 
