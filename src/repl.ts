@@ -26,7 +26,7 @@ export function getCommands() { //This type will describe which commands are ava
   };
 };
 
-function processUserInput(input: string, state: State) {
+async function processUserInput(input: string, state: State) {
   if (input.length === 0) {
   return;
 
@@ -38,7 +38,7 @@ function processUserInput(input: string, state: State) {
     for (let keyName of cmd) {
       if (foundCommand == keyName.name) {
       try{
-          keyName.callback(state);
+          await keyName.callback(state);
           return;
       } catch (error) {
         console.log("Problem found parsing commands:", error);
@@ -55,8 +55,8 @@ function processUserInput(input: string, state: State) {
 export function startREPL(state: State) {
   state.rl.prompt();
   try {
-    state.rl.on("line", (line) => {
-    processUserInput(line, state);
+    state.rl.on("line", async (line) => {
+    await processUserInput(line, state);
     state.rl.prompt();
   });}catch(error) {
     console.log(error);
