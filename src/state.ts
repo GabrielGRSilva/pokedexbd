@@ -8,23 +8,20 @@ export type CLICommand = {
   callback: (state: State) => void;
 };
 
-//export const commandRegistry = Object.values(getCommands());
-
 export type State = {
   rl: Interface,
   commands: CLICommand[],
 };
 
 export function initState(): State {
+  const rl = createInterface ({ //Standard interface which waits user input and answers
+  input: stdin,
+  output: stdout,
+  prompt: "Pokedex >",
+  });
 
-    const rl = createInterface ({ //Standard interface which waits user input and answers
-    input: stdin,
-    output: stdout,
-    prompt: "Pokedex >",
-    });
-
-    return {
-    rl,
-    commands: Object.values(getCommands()),  
-    };
+  return {
+  rl,
+  commands: Object.values(getCommands()),  
+  };
 }

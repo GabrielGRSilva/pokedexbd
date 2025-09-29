@@ -18,38 +18,40 @@ export function getCommands(): Record<string, CLICommand> { //This type will des
 };
 
 function processUserInput(input: string, state: State) {
-    if (input.length === 0) {
-    state.rl.prompt();
-    return;
+  if (input.length === 0) {
+  state.rl.prompt();
+  return;
 
-    } else {
+  } else {
 
     const foundCommand = cleanInput(input)[0]; //First word of input
     const cmd = state.commands;
-
     for (let keyName of cmd) {
-        if (foundCommand == keyName.name) {
-        try{
-            keyName.callback(state);
-        } catch (error) {
-          console.log("Problem found:", error);
+      if (foundCommand == keyName.name) {
+      try{
+          keyName.callback(state);
           state.rl.prompt();
           return;
-         };
+      } catch (error) {
+        console.log("Problem found parsing commands:", error);
+        state.rl.prompt();
+        return;
+        };
       };
+    };
     //If the loop doesn't find the command:
     console.log("Unknown command");
     state.rl.prompt();
     return;
-      };
     };
   };
 
-export function startREPL(newState: State) {
-        newState.rl.prompt();
-        newState.rl.on("line", processUserInput);
+export function startREPL(state: State) {
+  state.rl.prompt();
+  state.rl.on("line", (line) => processUserInput(line, state));
+  
 };
 
 export function cleanInput(input: string): string[] {
-    return input.toLowerCase().trim().split(" "); //User input is "case lowered", trimmed from whitespaces and split for each word
+  return input.toLowerCase().trim().split(" "); //User input is "case lowered", trimmed from whitespaces and split for each word
 };
