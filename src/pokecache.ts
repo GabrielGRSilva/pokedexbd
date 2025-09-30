@@ -16,6 +16,18 @@ export class Cache {
     this.#startReapLoop(); //Starts the loop
   };
 
+  get cache() {
+    return this.#cache;
+  };
+
+  get interval(): number {
+    return this.#interval;
+  };
+
+  get reapIntervalID() {
+    return this.#reapIntervalID;
+  };
+
   add<T>(key: string, val: T): void { //Adds new entry to the cache
     this.#cache.set(key, val as CacheEntry<any>);
   };
@@ -25,27 +37,24 @@ export class Cache {
   };
 
   #reap(): void {
-    const time = Date.now() - this.#interval;
+    const maxTime = Date.now() - this.interval;
 
-    for (let key of this.#cache.keys()){
-        let entry = this.#cache.get(key);
-
-        if (entry) { //if it is not undefined;
-        
-            if (entry.createdAt < time) {
-                this.#cache.delete(key)
-            };
-            }
-        }
+    if (this.cache){
+    for (const [key, entry] of this.cache.entries()) {
+      if (entry.createdAt < maxTime) {
+        this.#cache.delete(key);
+      };
     };
-
-    #startReapLoop(): void {
-        this.#reapIntervalID = setInterval(this.#reap, this.#interval);
     };
+  };
 
-    stopReapLoop(): void {
-        clearInterval(this.#reapIntervalID);
-        this.#reapIntervalID = undefined;
-    };
+  #startReapLoop(): void {
+    this.#reapIntervalID = setInterval(this.#reap, this.#interval);
+  };
+
+  stopReapLoop(): void {
+    clearInterval(this.#reapIntervalID);
+    this.#reapIntervalID = undefined;
+  };
 };
 
