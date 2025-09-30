@@ -5,7 +5,7 @@ test.concurrent.each([
   {
     key: "https://pokeapi.co/api/v2/location-area/",
     val: undefined,
-    interval: 500, // 1/2 second
+    interval: 5000, // 5 seconds
   },
   {
     key: "https://pokeapi.co/api/v2/location-area/?offset=20&limit=20",

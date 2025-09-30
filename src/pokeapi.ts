@@ -4,7 +4,7 @@ import {Cache} from "./pokecache.js"
 export class PokeAPI {
   private static readonly baseURL = "https://pokeapi.co/api/v2";
 
-  #cache = new Cache(500);
+  #cache = new Cache(5000);
 
   constructor(cache: Cache) {
     this.#cache = cache;
