@@ -19,3 +19,7 @@ A REPL, or Read-Eval-Print Loop, is a simple interactive programming environment
 -Thanks to my supervisor and cat, Dalva, I've been able to work through this project while resisting the urge to play Pokémon Violet again.
 
 -----
+
+<sub> The PokeAPI was created by Paul Hallett and other PokéAPI contributors around the world, and can be found here: https://pokeapi.co/ <br>
+Pokémon and Pokémon character names are trademarks of Nintendo.<br>
+Boot.Dev is an online course for backend developers created by Lane Wagner, and can be found here: www.boot.dev</sub>
