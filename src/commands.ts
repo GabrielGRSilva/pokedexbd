@@ -1,4 +1,5 @@
-import {State} from "./state.js"
+import {State} from "./state.js";
+import {Pokemon} from "./apitypes/pokemon.js";
 
 export async function commandExit(state: State) {
     console.log("Closing the Pokedex... Goodbye!");
@@ -58,6 +59,57 @@ export async function commandExplore(state: State, areaToExplore: string) {
             console.log(pokemonInfo.pokemon.name);
         };
     }catch(error){
-        console.log(`Error exploring area in commandExplore: ${error}`);
+        console.log(`failed exploring area in commandExplore: ${error}`);
     };
+};
+
+export async function commandCatch(state: State, pokemonToCatch: string) {
+
+    if (state.caughtPokemon){
+        Object.values(state.caughtPokemon).forEach((value: Pokemon) => { //Search the state object, if the pokemon has been captured
+            if (value.name == pokemonToCatch){
+                const xpDifficulty = value.base_experience;
+                attempToCatch(xpDifficulty,pokemonToCatch);
+                return;
+            }
+        });
+    };
+
+    try{
+        const pokemonData = await state.api.catchPokemon(pokemonToCatch);
+        
+        const xpDifficulty = pokemonData.base_experience;
+
+        attempToCatch(xpDifficulty, pokemonToCatch);
+
+        addToPokedex(state, pokemonData); //Adds to cache in the State object
+
+        return;
+       
+        }catch(error){
+        console.log(`failed fetching information in commandCatch: ${error}`);
+    };
+};
+
+function getRandomInt(min: number, max: number) {
+    const minCeiled = Math.ceil(min);
+    const maxFloored = Math.floor(max);
+    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+};
+
+function attempToCatch(xpDifficulty: number, pokemonToCatch: string) { //Pokemon capture logic
+    const catchPower = getRandomInt(1, 401) - xpDifficulty;
+
+    console.log(`Throwing a Pokeball at ${pokemonToCatch}...`);
+
+     if (catchPower <= 0){
+            console.log(`${pokemonToCatch} escaped!`);
+        }else{
+            console.log(`${pokemonToCatch} was caught!`)
+            };
+    return;
+};
+
+function addToPokedex(state: State, pokemonData: Pokemon): void{
+    state.caughtPokemon[pokemonData.name] = pokemonData;
 };

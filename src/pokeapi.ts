@@ -1,5 +1,6 @@
 import {LocationIDless} from "./apitypes/locationidless.js";
 import {LocationAreas} from "./apitypes/locationareas.js";
+import {Pokemon} from "./apitypes/pokemon.js"
 import {Cache} from "./pokecache.js"
 
 export class PokeAPI {
@@ -70,6 +71,31 @@ export class PokeAPI {
 
     }catch(error){
         throw new Error(`failed fetching and parsing in exploreArea: ${error}`);
-    }
-  }
+    };
+  };
+
+  async catchPokemon(pokemonToCatch?: string): Promise <Pokemon> {
+    if(!pokemonToCatch){
+        console.log("Choose a Pokemon! Type [catch POKEMONNAME]"); //If the user didn't choose a pokemon to catch
+    };
+
+    const fullURL = PokeAPI.baseURL + "/pokemon/" + pokemonToCatch;
+
+    try {
+        const response = await fetch(fullURL, {
+        method: "GET",
+        mode: "cors",    
+    });
+    
+    const data = await response.json();
+    let obj: Pokemon = JSON.parse(JSON.stringify(data));
+
+    //The memory (cache) will be added into the State object from the command function in commands.ts IF the pokemon is caught
+
+   return obj;
+
+    }catch(error){
+        throw new Error(`failed fetching and parsing in catchPokemon: ${error}`);
+    };
+  };
 };

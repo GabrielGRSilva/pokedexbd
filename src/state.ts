@@ -3,6 +3,7 @@ import {stdin, stdout} from 'node:process';
 import {getCommands} from "./repl.js";
 import {PokeAPI} from "./pokeapi.js";
 import {Cache} from "./pokecache.js";
+import {Pokemon} from "./apitypes/pokemon.js";
 
 export type CLICommand = {
   name: string;
@@ -16,6 +17,7 @@ export type State = {
   api: PokeAPI,
   nextLocationsURL: string,
   prevLocationsURL: string,
+  caughtPokemon: Record<string, Pokemon>,
 };
 
 export function initState(): State {
@@ -31,5 +33,6 @@ export function initState(): State {
   api: new PokeAPI(new Cache(500)),
   nextLocationsURL: "",
   prevLocationsURL: "",
+  caughtPokemon: {} as Record<string, Pokemon>,
   };
 }

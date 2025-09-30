@@ -1,32 +1,37 @@
 import {State} from "./state.js"
-import {commandExit, commandHelp, commandMap, commandMapBack, commandExplore} from "./commands.js"
+import * as c from "./commands.js"
 
 export function getCommands() { //This type will describe which commands are available to the user
   return {
     exit: {
       name: "exit",
       description: "Exits the pokedex",
-      callback: commandExit,
+      callback: c.commandExit,
     },
     help: {
       name: "help",
       description: "Explains the available commands",
-      callback: commandHelp,
+      callback: c.commandHelp,
     },
     map: {
       name: "map",
       description: "Shows areas of the Pokémon world",
-      callback: commandMap,
+      callback: c.commandMap,
     },
     mapb: {
       name: "mapb",
       description: "Shows previous seen areas of the Pokémon world",
-      callback: commandMapBack,
+      callback: c.commandMapBack,
     }, 
     explore: {
       name: "explore",
-      description: "Shows pokémon found in a specific area (explore [areatoexplore])",
-      callback: commandExplore,
+      description: "Shows Pokémon found in a specific area (explore [areatoexplore])",
+      callback: c.commandExplore,
+    },
+    catch: {
+      name: "catch",
+      description: "Attempts to catch a Pokémon",
+      callback: c.commandCatch,
     },
   };
 };
@@ -43,7 +48,9 @@ async function processUserInput(input: string, state: State) {
     
     for (let keyName of cmd) {
 
-      if (foundCommand == "explore" && keyName.name == "explore"){ //Alternate logic as it also passes the user input (second typed word)
+      if (foundCommand == "explore" && keyName.name == "explore"|| //Alternate logic as it also passes the user input (second typed word) in some commands
+        foundCommand == "catch" && keyName.name == "catch"
+        ){
         const area = cleanInput(input)[1];
         await keyName.callback(state, area);
         return;
