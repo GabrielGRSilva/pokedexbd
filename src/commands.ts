@@ -64,7 +64,6 @@ export async function commandExplore(state: State, areaToExplore: string) {
 };
 
 export async function commandCatch(state: State, pokemonToCatch: string) {
-
     if (state.caughtPokemon){
         Object.values(state.caughtPokemon).forEach((value: Pokemon) => { //Search the state object, if the pokemon has been captured
             if (value.name == pokemonToCatch){
@@ -88,6 +87,30 @@ export async function commandCatch(state: State, pokemonToCatch: string) {
        
         }catch(error){
         console.log(`failed fetching information in commandCatch: ${error}`);
+    };
+};
+
+export async function commandInfo(state: State, pokemonToCatch: string){
+    let found = false;
+     if (state.caughtPokemon){
+        Object.values(state.caughtPokemon).forEach((value: Pokemon) => { //Search the state object, if the pokemon has been captured
+            if (value.name == pokemonToCatch){
+                found = true;
+                console.log("Here's the information you requested, trainer:\n");
+                console.log(`Name: ${value.name}`);
+                console.log(`Height: ${value.height}`);
+                console.log(`Weight: ${value.weight}`);
+                for (let eachStat of value.stats){
+                    console.log(`${eachStat.stat.name}: ${eachStat.base_stat}`);
+                };
+                for (let eachType of value.types){
+                    console.log(`${eachType.type.name}`);
+                };
+            };
+        });
+     };
+    if (found === false){
+    console.log("You have not caught that one yet!");
     };
 };
 

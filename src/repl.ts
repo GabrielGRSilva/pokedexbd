@@ -33,6 +33,11 @@ export function getCommands() { //This type will describe which commands are ava
       description: "Attempts to catch a Pokémon",
       callback: c.commandCatch,
     },
+    inspect: {
+      name: "inspect",
+      description: "Shows information about a Pokémon (only if you already caught it)",
+      callback: c.commandInfo,
+    },
   };
 };
 
@@ -49,7 +54,8 @@ async function processUserInput(input: string, state: State) {
     for (let keyName of cmd) {
 
       if (foundCommand == "explore" && keyName.name == "explore"|| //Alternate logic as it also passes the user input (second typed word) in some commands
-        foundCommand == "catch" && keyName.name == "catch"
+        foundCommand == "catch" && keyName.name == "catch" ||
+        foundCommand == "inspect" && keyName.name == "inspect"
         ){
         const area = cleanInput(input)[1];
         await keyName.callback(state, area);
