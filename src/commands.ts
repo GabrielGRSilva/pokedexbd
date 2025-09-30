@@ -114,6 +114,18 @@ export async function commandInfo(state: State, pokemonToCatch: string){
     };
 };
 
+export async function commandPokedex(state: State){
+    const pokemonList = Object.values(state.caughtPokemon);
+
+    if (pokemonList.length < 1){
+        console.log("Your Pokédex is empty, trainer! Go catch some Pokémon!");
+    }else{
+        for (let eachPokemon of pokemonList){
+            console.log(eachPokemon.name);
+        };
+    };
+};
+
 function getRandomInt(min: number, max: number) {
     const minCeiled = Math.ceil(min);
     const maxFloored = Math.floor(max);

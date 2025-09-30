@@ -38,6 +38,11 @@ export function getCommands() { //This type will describe which commands are ava
       description: "Shows information about a Pokémon (only if you already caught it)",
       callback: c.commandInfo,
     },
+    pokedex: {
+      name: "pokedex",
+      description: "Shows the Pokémon you have already caught",
+      callback: c.commandPokedex,
+    },
   };
 };
 
