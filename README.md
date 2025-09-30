@@ -17,4 +17,5 @@ A REPL, or Read-Eval-Print Loop, is a simple interactive programming environment
 -In addition to the course's guide, I've also added some personal touches in the project, such as organizing the types and structs derivated from the JSON created through the API requests in a way, I believe, is clearer to the user and to someone who wants to review my code.
 
 -Thanks to my supervisor and cat, Dalva, I've been able to work through this project while resisting the urge to play Pokémon Violet again.
----
+
+-----

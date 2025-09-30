@@ -1,4 +1,5 @@
 import {LocationIDless} from "./apitypes/locationidless.js";
+import {LocationAreas} from "./apitypes/locationareas.js";
 import {Cache} from "./pokecache.js"
 
 export class PokeAPI {
@@ -41,8 +42,12 @@ export class PokeAPI {
     }
   };
 
-  async fetchLocation(locationName: string): Promise<LocationIDless> {
-    const fullURL = PokeAPI.baseURL + "/location/" + locationName;
+  async exploreArea(locationName?: string): Promise<LocationAreas> {
+    if(!locationName){
+        console.log("Choose an area to explore! Type [explore AREANAME]"); //If the user didn't choose an area to explore (typed nothing after the command)
+    };
+
+    const fullURL = PokeAPI.baseURL + "/location-area/" + locationName;
 
     const cachedEntry = this.#cache.get(fullURL); //If the obj is already in cache
     if (cachedEntry) {
@@ -57,16 +62,14 @@ export class PokeAPI {
     
     const data = await response.json();
 
-    let obj: LocationIDless = JSON.parse(data);
-
     if (!this.#cache.get(fullURL)){
-    this.#cache.add(fullURL, obj); //Check and add to cache
+    this.#cache.add(fullURL, data);
     };
 
-   return obj;
+   return data;
 
     }catch(error){
-        throw new Error(`failed fetching and parsing in fetchLocation: ${error}`);
+        throw new Error(`failed fetching and parsing in exploreArea: ${error}`);
     }
   }
 };

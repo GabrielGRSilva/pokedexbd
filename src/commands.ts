@@ -48,5 +48,16 @@ export async function commandMapBack(state: State) {
     }catch(error){
         console.log(`Error fetching locations in commandMap: ${error}`);
     };
+};
 
+export async function commandExplore(state: State, areaToExplore: string) {
+    try{
+        const exploredData = await state.api.exploreArea(areaToExplore);
+
+        for (let pokemonInfo of exploredData.pokemon_encounters){
+            console.log(pokemonInfo.pokemon.name);
+        };
+    }catch(error){
+        console.log(`Error exploring area in commandExplore: ${error}`);
+    };
 };
