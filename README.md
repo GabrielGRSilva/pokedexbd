@@ -6,7 +6,7 @@
 
 ## 💡 From the official course description:
 
-A REPL, or Read-Eval-Print Loop, is a simple interactive programming environment that takes user input, evaluates it, and returns the result to the user. In this guided project, you'll build a Pokedex-like REPL in Typescript that uses the PokeAPI to fetch data about Pokemon. It's a great way to put your Typescript knowledge to the test and learn valuable skills like HTTP networking and data serialization.
+This is a Pokedex built in TypeScript as a part of the Boot.Dev TypeScript learning path. In this guided project, I built a Pokedex-like REPL (Read-Eval-Print Loop) in Typescript that uses the PokeAPI to fetch data about Pokemon. I've also developed skills like HTTP networking and data serialization.
 
 ------
 
